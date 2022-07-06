@@ -1,6 +1,6 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:login_ui/register_screen.dart';
+import 'package:GemCenter/register_screen.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key, required this.title}) : super(key: key);
@@ -19,20 +19,22 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       body: Container(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(25),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
+            const SizedBox(height: 60),
             const Text(
-              'Sign in',
+              'GemCenter',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 40,
+                fontStyle: FontStyle.italic,
               ),
             ),
             const SizedBox(
-              height: 60,
+              height: 320,
             ),
             Form(
               key: _formKey,
@@ -44,8 +46,8 @@ class _LoginPageState extends State<LoginPage> {
                         : "Please enter a valid email",
                     maxLines: 1,
                     decoration: InputDecoration(
-                      hintText: 'Enter your email',
-                      prefixIcon  : const Icon(Icons.email),
+                      hintText: 'email',
+                      prefixIcon: const Icon(Icons.email),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
@@ -65,26 +67,26 @@ class _LoginPageState extends State<LoginPage> {
                     obscureText: true,
                     decoration: InputDecoration(
                       prefixIcon: const Icon(Icons.lock),
-                      hintText: 'Enter your password',
+                      hintText: 'password',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
                   ),
-                  CheckboxListTile(
-                    title: const Text("Remember me"),
-                    contentPadding: EdgeInsets.zero,
-                    value: rememberValue,
-                    activeColor: Theme.of(context).colorScheme.primary,
-                    onChanged: (newValue) {
-                      setState(() {
-                        rememberValue = newValue!;
-                      });
-                    },
-                    controlAffinity: ListTileControlAffinity.leading,
-                  ),
+                  // CheckboxListTile(
+                  //   title: const Text("Remember me"),
+                  //   contentPadding: EdgeInsets.zero,
+                  //   value: rememberValue,
+                  //   activeColor: Theme.of(context).colorScheme.primary,
+                  //   onChanged: (newValue) {
+                  //     setState(() {
+                  //       rememberValue = newValue!;
+                  //     });
+                  //   },
+                  //   controlAffinity: ListTileControlAffinity.leading,
+                  // ),
                   const SizedBox(
-                    height: 20,
+                    height: 30,
                   ),
                   ElevatedButton(
                     onPressed: () {
@@ -106,7 +108,7 @@ class _LoginPageState extends State<LoginPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text('Not registered yet?'),
+                      const Text('New to GemCenter?'),
                       TextButton(
                         onPressed: () {
                           Navigator.pushReplacement(

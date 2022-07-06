@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'login_screen.dart';
 
 void main() {
@@ -7,32 +6,32 @@ void main() {
 }
 
 ColorScheme defaultColorScheme = const ColorScheme(
-  primary: Color(0xffBB86FC),
+  primary: Color.fromARGB(255, 4, 155, 100),
   secondary: Color(0xff03DAC6),
+  tertiary: Color(0xff000000),
   surface: Color(0xff181818),
-  background: Color(0xff121212),
+  background: Color.fromARGB(255, 255, 255, 255),
   error: Color(0xffCF6679),
-  onPrimary: Color(0xff000000),
+  onPrimary: Color.fromARGB(255, 255, 255, 255),
   onSecondary: Color(0xff000000),
-  onSurface: Color(0xffffffff),
-  onBackground: Color(0xffffffff),
+  onSurface: Color.fromARGB(255, 0, 0, 0),
+  onBackground: Color.fromARGB(255, 0, 0, 0),
   onError: Color(0xff000000),
-  brightness: Brightness.dark,
+  brightness: Brightness.light,
 );
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'GemCenter',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: defaultColorScheme,
-        primarySwatch: Colors.blue,
       ),
-      home: const LoginPage(title: 'Login UI'),
+      home: const LoginPage(title: 'Sign In'),
     );
   }
 }
