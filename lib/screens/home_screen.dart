@@ -19,6 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: const <Widget>[
             Text('Home'),
+            // ElevatedButton(child: Text('Log out'), onPressed:()),
           ],
         ),
       ),

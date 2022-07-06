@@ -1,19 +1,21 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:GemCenter/register_screen.dart';
+import 'package:gem_center/screens/login_screen.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key, required this.title}) : super(key: key);
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({Key? key, required this.title}) : super(key: key);
   final String title;
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
   final _formKey = GlobalKey<FormState>();
   var rememberValue = false;
 
+  String firstName = '';
+  String lastName = '';
   String email = '';
   String password = '';
 
@@ -27,29 +29,74 @@ class _LoginPageState extends State<LoginPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            const SizedBox(height: 60),
             const Text(
-              'GemCenter',
+              'Sign up',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: 40,
-                fontStyle: FontStyle.italic,
+                fontSize: 30,
               ),
             ),
             const SizedBox(
-              height: 320,
+              height: 310,
             ),
             Form(
               key: _formKey,
               child: Column(
                 children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextFormField(
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Enter first name';
+                            }
+                            return null;
+                          },
+                          onSaved: (value) =>
+                              setState(() => firstName = value!),
+                          maxLines: 1,
+                          decoration: InputDecoration(
+                            hintText: 'First name',
+                            prefixIcon: const Icon(Icons.person),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 20,
+                      ),
+                      Expanded(
+                        child: TextFormField(
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Enter last name';
+                            }
+                            return null;
+                          },
+                          onSaved: (value) => setState(() => lastName = value!),
+                          maxLines: 1,
+                          decoration: InputDecoration(
+                            hintText: 'Last name',
+                            prefixIcon: const Icon(Icons.person),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
                   TextFormField(
                     validator: (value) => EmailValidator.validate(value!)
                         ? null
                         : "Please enter a valid email",
-                    onSaved: (value) => setState(() {
-                      email = value!;
-                    }),
+                    onSaved: (value) => setState(() => email = value!),
                     maxLines: 1,
                     decoration: InputDecoration(
                       hintText: 'email',
@@ -71,7 +118,7 @@ class _LoginPageState extends State<LoginPage> {
                       }
                       return null;
                     },
-                    onSaved: (value) => setState((() => password = value!)),
+                    onSaved: (value) => setState(() => password = value!),
                     maxLines: 1,
                     obscureText: true,
                     decoration: InputDecoration(
@@ -89,10 +136,10 @@ class _LoginPageState extends State<LoginPage> {
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
                         _formKey.currentState?.save();
-                        final message = 'Welcome $email!';
-                        final snackBar = SnackBar(
-                          content: Text(message),
-                          duration: const Duration(seconds: 3),
+                        final massage = 'Welcome $firstName $lastName';
+                        final SnackBar snackBar = SnackBar(
+                          content: Text(massage),
+                          duration: Duration(seconds: 3),
                         );
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       }
@@ -101,7 +148,7 @@ class _LoginPageState extends State<LoginPage> {
                       padding: const EdgeInsets.fromLTRB(40, 15, 40, 15),
                     ),
                     child: const Text(
-                      'Sign in',
+                      'Sign up',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                       ),
@@ -113,18 +160,18 @@ class _LoginPageState extends State<LoginPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text('New to GemCenter?'),
+                      const Text('Already registered?'),
                       TextButton(
                         onPressed: () {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
-                                  const RegisterPage(title: 'Register UI'),
+                                  const LoginPage(title: 'Login UI'),
                             ),
                           );
                         },
-                        child: const Text('Create an account'),
+                        child: const Text('Sign in'),
                       ),
                     ],
                   ),

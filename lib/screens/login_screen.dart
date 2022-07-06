@@ -1,21 +1,19 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:GemCenter/login_screen.dart';
+import 'package:gem_center/screens/register_screen.dart';
 
-class RegisterPage extends StatefulWidget {
-  const RegisterPage({Key? key, required this.title}) : super(key: key);
+class LoginPage extends StatefulWidget {
+  const LoginPage({Key? key, required this.title}) : super(key: key);
   final String title;
 
   @override
-  State<RegisterPage> createState() => _RegisterPageState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
+class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   var rememberValue = false;
 
-  String firstName = '';
-  String lastName = '';
   String email = '';
   String password = '';
 
@@ -29,74 +27,34 @@ class _RegisterPageState extends State<RegisterPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
+            const SizedBox(height: 60),
             const Text(
-              'Sign up',
+              'GemCenter',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: 30,
+                fontSize: 40,
+                fontStyle: FontStyle.italic,
               ),
             ),
             const SizedBox(
-              height: 310,
+              height: 30,
+            ),
+            Image.asset(
+              'assets/images/image.png',
+              width: 400,
+              height: 300,
             ),
             Form(
               key: _formKey,
               child: Column(
                 children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: TextFormField(
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Enter first name';
-                            }
-                            return null;
-                          },
-                          onSaved: (value) =>
-                              setState(() => firstName = value!),
-                          maxLines: 1,
-                          decoration: InputDecoration(
-                            hintText: 'First name',
-                            prefixIcon: const Icon(Icons.person),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      Expanded(
-                        child: TextFormField(
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Enter last name';
-                            }
-                            return null;
-                          },
-                          onSaved: (value) => setState(() => lastName = value!),
-                          maxLines: 1,
-                          decoration: InputDecoration(
-                            hintText: 'Last name',
-                            prefixIcon: const Icon(Icons.person),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
                   TextFormField(
                     validator: (value) => EmailValidator.validate(value!)
                         ? null
                         : "Please enter a valid email",
-                    onSaved: (value) => setState(() => email = value!),
+                    onSaved: (value) => setState(() {
+                      email = value!;
+                    }),
                     maxLines: 1,
                     decoration: InputDecoration(
                       hintText: 'email',
@@ -118,7 +76,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       }
                       return null;
                     },
-                    onSaved: (value) => setState(() => password = value!),
+                    onSaved: (value) => setState((() => password = value!)),
                     maxLines: 1,
                     obscureText: true,
                     decoration: InputDecoration(
@@ -136,10 +94,10 @@ class _RegisterPageState extends State<RegisterPage> {
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
                         _formKey.currentState?.save();
-                        final massage = 'Welcome $firstName $lastName';
-                        final SnackBar snackBar = SnackBar(
-                          content: Text(massage),
-                          duration: Duration(seconds: 3),
+                        final message = 'Welcome $email!';
+                        final snackBar = SnackBar(
+                          content: Text(message),
+                          duration: const Duration(seconds: 3),
                         );
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       }
@@ -148,7 +106,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       padding: const EdgeInsets.fromLTRB(40, 15, 40, 15),
                     ),
                     child: const Text(
-                      'Sign up',
+                      'Sign in',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                       ),
@@ -160,18 +118,18 @@ class _RegisterPageState extends State<RegisterPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text('Already registered?'),
+                      const Text('New to GemCenter?'),
                       TextButton(
                         onPressed: () {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
-                                  const LoginPage(title: 'Login UI'),
+                                  const RegisterPage(title: 'Register UI'),
                             ),
                           );
                         },
-                        child: const Text('Sign in'),
+                        child: const Text('Create an account'),
                       ),
                     ],
                   ),
