@@ -14,6 +14,11 @@ class _RegisterPageState extends State<RegisterPage> {
   final _formKey = GlobalKey<FormState>();
   var rememberValue = false;
 
+  String firstName = '';
+  String lastName = '';
+  String email = '';
+  String password = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,9 +47,14 @@ class _RegisterPageState extends State<RegisterPage> {
                     children: [
                       Expanded(
                         child: TextFormField(
-                          validator: (value) => EmailValidator.validate(value!)
-                              ? null
-                              : "Please enter a valid email",
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Enter first name';
+                            }
+                            return null;
+                          },
+                          onSaved: (value) =>
+                              setState(() => firstName = value!),
                           maxLines: 1,
                           decoration: InputDecoration(
                             hintText: 'First name',
@@ -60,9 +70,13 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                       Expanded(
                         child: TextFormField(
-                          validator: (value) => EmailValidator.validate(value!)
-                              ? null
-                              : "Please enter a valid email",
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Enter last name';
+                            }
+                            return null;
+                          },
+                          onSaved: (value) => setState(() => lastName = value!),
                           maxLines: 1,
                           decoration: InputDecoration(
                             hintText: 'Last name',
@@ -82,6 +96,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     validator: (value) => EmailValidator.validate(value!)
                         ? null
                         : "Please enter a valid email",
+                    onSaved: (value) => setState(() => email = value!),
                     maxLines: 1,
                     decoration: InputDecoration(
                       hintText: 'email',
@@ -98,9 +113,12 @@ class _RegisterPageState extends State<RegisterPage> {
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter your password';
+                      } else if (value.length < 8) {
+                        return 'Password must be at least 8 characters';
                       }
                       return null;
                     },
+                    onSaved: (value) => setState(() => password = value!),
                     maxLines: 1,
                     obscureText: true,
                     decoration: InputDecoration(
@@ -116,7 +134,15 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      if (_formKey.currentState!.validate()) {}
+                      if (_formKey.currentState!.validate()) {
+                        _formKey.currentState?.save();
+                        final massage = 'Welcome $firstName $lastName';
+                        final SnackBar snackBar = SnackBar(
+                          content: Text(massage),
+                          duration: Duration(seconds: 3),
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      }
                     },
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.fromLTRB(40, 15, 40, 15),

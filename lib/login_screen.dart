@@ -14,6 +14,9 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   var rememberValue = false;
 
+  String email = '';
+  String password = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,6 +47,9 @@ class _LoginPageState extends State<LoginPage> {
                     validator: (value) => EmailValidator.validate(value!)
                         ? null
                         : "Please enter a valid email",
+                    onSaved: (value) => setState(() {
+                      email = value!;
+                    }),
                     maxLines: 1,
                     decoration: InputDecoration(
                       hintText: 'email',
@@ -60,9 +66,12 @@ class _LoginPageState extends State<LoginPage> {
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter your password';
+                      } else if (value.length < 8) {
+                        return 'Password must be at least 8 characters';
                       }
                       return null;
                     },
+                    onSaved: (value) => setState((() => password = value!)),
                     maxLines: 1,
                     obscureText: true,
                     decoration: InputDecoration(
@@ -73,24 +82,20 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                   ),
-                  // CheckboxListTile(
-                  //   title: const Text("Remember me"),
-                  //   contentPadding: EdgeInsets.zero,
-                  //   value: rememberValue,
-                  //   activeColor: Theme.of(context).colorScheme.primary,
-                  //   onChanged: (newValue) {
-                  //     setState(() {
-                  //       rememberValue = newValue!;
-                  //     });
-                  //   },
-                  //   controlAffinity: ListTileControlAffinity.leading,
-                  // ),
                   const SizedBox(
                     height: 30,
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      if (_formKey.currentState!.validate()) {}
+                      if (_formKey.currentState!.validate()) {
+                        _formKey.currentState?.save();
+                        final message = 'Welcome $email!';
+                        final snackBar = SnackBar(
+                          content: Text(message),
+                          duration: const Duration(seconds: 3),
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      }
                     },
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.fromLTRB(40, 15, 40, 15),
