@@ -1,6 +1,7 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:gem_center/screens/register_screen.dart';
+import 'package:gem_center/widgets/widgets.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key, required this.title}) : super(key: key);
@@ -16,6 +17,9 @@ class _LoginPageState extends State<LoginPage> {
 
   String email = '';
   String password = '';
+
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -112,6 +116,8 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                   ),
+                  textInput("nnmjk", Icons.email, Colors.white,
+                      TextInputType.emailAddress, TextEditingController()),
                   const SizedBox(
                     height: 20,
                   ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gem_center/screens/login_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -17,9 +18,29 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: const <Widget>[
-            Text('Home'),
-            // ElevatedButton(child: Text('Log out'), onPressed:()),
+          children: <Widget>[
+            const Text('Home'),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const LoginPage(
+                      title: 'Sign In',
+                    ),
+                  ),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.fromLTRB(40, 15, 40, 15),
+              ),
+              child: const Text(
+                'Log Out',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
           ],
         ),
       ),

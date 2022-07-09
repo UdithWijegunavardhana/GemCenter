@@ -36,9 +36,14 @@ class _RegisterPageState extends State<RegisterPage> {
                 fontSize: 30,
               ),
             ),
-            const SizedBox(
-              height: 310,
+            Image.asset(
+              'assets/images/signUp02.png',
+              width: 400,
+              height: 300,
             ),
+            // const SizedBox(
+            //   height: 310,
+            // ),
             Form(
               key: _formKey,
               child: Column(
